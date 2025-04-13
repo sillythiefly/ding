@@ -1,6 +1,6 @@
 
 # ding
-ding is a little script I made to get a noise after a command that i know will take some time
+ding is a little script I made to get a noise after a command that i know will take some time (sounds not included... yet)
 
 recomended usage "somecommand && ding"
 
