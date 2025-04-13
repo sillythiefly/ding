@@ -1,0 +1,79 @@
+#!/bin/bash
+
+# help
+Help()
+{
+   # Display Help
+   echo "ding is a little script I made to get a noise after a command that i know will take some time"
+   echo 'recomended usage "somecommand && ding"'
+   echo
+   echo "syntax: ding [-c|h|v]"
+   echo "options:"
+   echo "      make it ding"
+   echo "c     remake config, change sound, will autorun if no config detected"
+   echo "h     print this"
+   echo "v     print software version and exit"
+   echo
+}
+
+# config
+
+Config()
+{
+mkdir -p $HOME/.config/ding/
+echo "hi, just a little question..."
+#add a case whether to use some of my sounds or a custom one
+#also find out how to add my sounds at some point
+echo "can i get a full directory for the sound?"
+read csound
+if [ -f $HOME/.config/ding/config ]; then
+  rm $HOME/.config/ding/config
+fi
+echo "sound=$csound" > $HOME/.config/ding/config
+sound=$csound
+}
+
+
+# version
+Version()
+{
+echo "ding v1.0 by sillythiefly"
+}
+
+
+# sanity tests
+
+if ! [ -x "$(command -v ffplay)" ]; then
+  echo 'oops! ffmpeg is not installed'
+  echo "fix that and come back"
+  exit 1
+fi
+if ! [ -f $HOME/.config/ding/config ]; then
+  Config
+fi
+
+
+# options
+while getopts ":hcv" option; do
+   case $option in
+      h) # display Help
+         Help
+         exit;;
+      c)
+         Config
+         exit;;
+      v)
+         Version
+	 exit;;
+     \?) # Invalid option
+         echo "Error: Invalid option"
+         exit;;
+   esac
+done
+
+
+# main
+
+source $HOME/.config/ding/config
+ffplay -v 0 -nodisp -autoexit $sound
+
