@@ -2,6 +2,8 @@
 # ding
 ding is a little script I made to get a noise after a command that i know will take some time (sounds not included... yet)
 
+requires ffmpeg
+
 recomended usage "somecommand && ding"
 
 syntax: ding [-c|h|v]
